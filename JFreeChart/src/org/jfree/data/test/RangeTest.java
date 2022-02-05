@@ -5,22 +5,71 @@ import org.jfree.data.Range;
 import org.junit.*;
 
 public class RangeTest {
-    private Range exampleRange;
+    private Range refRange;
+    
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
 
 
     @Before
-    public void setUp() throws Exception { exampleRange = new Range(-1, 1);
+    public void setUp() throws Exception { 
+    	refRange = new Range (-8.0, 16.0);
+    	
     }
 
 
+//    @Test
+//    public void centralValueShouldBeZero() {
+//        assertEquals("The central value of -1 and 1 should be 0",
+//        0, negToPosRange.getCentralValue(), .000000001d);
+//    }
+
+    @Test 
+    public void intersectsWithinBoundaryNotTouchingBoundary() {
+    	assertTrue("The range from -4.0 to 8.0 intersects the range from -8 to 16.", refRange.intersects(-4.0, 8.0));
+    }
+    
     @Test
-    public void centralValueShouldBeZero() {
-        assertEquals("The central value of -1 and 1 should be 0",
-        0, exampleRange.getCentralValue(), .000000001d);
+    public void intersectsWithinBoundaryTouchingBoundary() {
+    	assertTrue("The range from -8.0 to 16.0 intersects the range from -8.0 to 16.0", refRange.intersects(-8.0, 16.0));
     }
-
+    
+    @Test
+    public void intersectsAboveUpperBoundaryAndBelowLowerBoundaryNotTouchingBoundary() {
+    	assertTrue("The range from -28.0 to 36.0 intersects the range from -8.0 to 16.0", refRange.intersects(-8.0, 16.0));
+    }
+    
+    @Test
+    public void intersectsBelowLowerBoundaryAndWithinBoundary() {
+    	assertTrue("The range from -14.0 to 2.0 intersects the range from -8.0 to 16.0", refRange.intersects(-14.0, 2.0));
+    }
+    
+    @Test
+    public void intersectsOnlyTouchingLowerBoundary() {
+    	assertTrue("The range from -14 to -8 intersects the range from -8.0 to 16.0", refRange.intersects(-14.0, -8.0));
+    }
+    
+    @Test
+    public void intersectsFullyBelowLowerBoundaryNotTouchingBoundary() {
+    	assertFalse("The range from -43.0 to -16.0 does not intersect the range from -8.0 to 16.0", refRange.intersects(-43.0, -16.0));
+    }
+    //////
+    @Test
+    public void intersectsAboveUpperBoundaryAndWithinBoundary() {
+    	assertTrue("The range from 3.0 to 28.0 intersects the range from -8.0 to 16.0", refRange.intersects(3.0, 28.0));
+    }
+    
+    @Test
+    public void intersectsOnlyTouchingUpperBoundary() {
+    	assertTrue("The range from 16.0 to 32.0 intersects the range from -8.0 to 16.0", refRange.intersects(16.0, 32.0));
+    }
+    
+    @Test
+    public void intersectsFullyAboveUpperBoundaryNotTouchingBoundary() {
+    	assertFalse("The range from 17.0 to 19.0 does not intersect the range from -8.0 to 16.0", refRange.intersects(17.0, 19.0));
+    }
+    
+    
     @After
     public void tearDown() throws Exception {
     }
