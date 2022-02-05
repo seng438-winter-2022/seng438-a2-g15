@@ -7,10 +7,6 @@ import org.junit.*;
 public class RangeTest {
     private Range refRange;
     
-    // NOTE FROM BROOKE: I am currently researching as to whether Range is an 
-    // inclusive range, only partially inclusive, or non-inclusive, as I am recieving
-    // conflicting results from both these tests, and my own research. 
-    
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
 
@@ -18,22 +14,14 @@ public class RangeTest {
     @Before
     public void setUp() throws Exception { 
     	refRange = new Range (-8.0, 16.0);
-    	
+  
     }
-
-
-//    @Test
-//    public void centralValueShouldBeZero() {
-//        assertEquals("The central value of -1 and 1 should be 0",
-//        0, negToPosRange.getCentralValue(), .000000001d);
-//    }
 
     @Test 
     public void intersectsWithinBoundaryNotTouchingBoundary() {
     	assertTrue("The range from -4.0 to 8.0 intersects the range from -8 to 16.", refRange.intersects(-4.0, 8.0));
     }
     
-    // Thinking about this. 
     @Test
     public void intersectsWithinBoundaryTouchingBoundary() {
     	assertTrue("The range from -8.0 to 16.0 intersects the range from -8.0 to 16.0", refRange.intersects(-8.0, 16.0));
@@ -49,10 +37,11 @@ public class RangeTest {
     	assertTrue("The range from -14.0 to 2.0 intersects the range from -8.0 to 16.0", refRange.intersects(-14.0, 2.0));
     }
     
-    // Thinking about this
+    
+    // Test fails, despite overlapping with refRange at value -8.0
     @Test
     public void intersectsOnlyTouchingLowerBoundary() {
-    	assertFalse("The range from -14 to -8 intersects the range from -8.0 to 16.0", refRange.intersects(-14.0, -8.0));
+    	assertTrue("The range from -14 to -8 intersects the range from -8.0 to 16.0", refRange.intersects(-14.0, -8.0));
     }
     
     @Test
@@ -65,9 +54,10 @@ public class RangeTest {
     	assertTrue("The range from 3.0 to 28.0 intersects the range from -8.0 to 16.0", refRange.intersects(3.0, 28.0));
     }
     
+    // Test fails, despite overlapping with refRange at value 16.0
     @Test
     public void intersectsOnlyTouchingUpperBoundary() {
-    	assertFalse("The range from 16.0 to 32.0 intersects the range from -8.0 to 16.0", refRange.intersects(16.0, 32.0));
+    	assertTrue("The range from 16.0 to 32.0 intersects the range from -8.0 to 16.0", refRange.intersects(16.0, 32.0));
     }
     
     @Test
