@@ -7,6 +7,8 @@ import org.junit.*;
 public class RangeTest {
     private Range exampleRange;
     private Range higherRange;
+    private Range extraneousMaxRange;
+    private Range extraneousMinRange;
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
 
@@ -15,6 +17,8 @@ public class RangeTest {
     public void setUp() throws Exception { 
     	exampleRange = new Range(-1, 1);
         higherRange = new Range(2,4);
+        extraneousMaxRange = new Range(1, Double.MAX_VALUE);
+        extraneousMinRange = new Range(-Double.MIN_VALUE, 1);
     }
 
     @Test
@@ -60,6 +64,12 @@ public class RangeTest {
     }
 
     @Test
+    public void expandToIncludeValidRangeLargeExtraneousValue() {
+        Range testRange = Range.expandToInclude(exampleRange, Double.MAX_VALUE);
+        assertEquals("The upper bound of the range should be " + Double.toString(Double.MAX_VALUE), Double.MAX_VALUE, testRange.getUpperBound(), .000000001d);
+    }
+
+    @Test
     public void shiftValidRangeGreaterThanZero() {
         Range testRange = Range.shift(higherRange, 2);
         assertEquals("The upper bound should be 6", 6, testRange.getUpperBound(), .000000001d);
@@ -83,6 +93,19 @@ public class RangeTest {
     @Test(expected = IllegalArgumentException.class)
     public void shiftNullRangeLessThanZero() {
         Range testRange = Range.shift(null, -2);
+    }
+
+    @Test
+    public void shiftValidRangeMinNegativeDoubleValue() {
+        Range testRange = Range.shift(exampleRange, -1 * Double.MIN_VALUE);
+        assertEquals("The upper bound should be -1", -1, testRange.getLowerBound(), .000000001d);
+    }
+
+    @Test
+    public void shiftValidRangeMaxDoubleValue() {
+        Range testRange = Range.shift(exampleRange, Double.MAX_VALUE);
+        assertEquals("The upper bound should be " + Double.toString(Double.MAX_VALUE + 1), Double.MAX_VALUE + 1, testRange.getUpperBound(), .000000001d);
+        assertEquals("The lower bound should be 0", 0, testRange.getLowerBound(), .000000001d);
     }
 
     @Test
@@ -121,6 +144,30 @@ public class RangeTest {
     @Test(expected = IllegalArgumentException.class)
     public void scaleNullRangeLessThanOne() {
         Range testRange = Range.scale(null, 2);
+    }
+
+    @Test
+    public void scaleExtraneousMaxRangeGreaterThanOne() {
+        Range testRange = Range.scale(extraneousMaxRange, 2);
+        assertTrue("The upper bound of the range should be infinity", Double.isInfinite(testRange.getUpperBound()));
+    }
+
+    @Test
+    public void scaleExtraneousMinRangeLessThanOne() {
+        Range testRange = Range.scale(extraneousMinRange, 0.5);
+        assertEquals("The lower bound of the range should be " + Double.toString(Double.MIN_VALUE / 2), Double.MIN_VALUE / 2, testRange.getLowerBound(), .000000001d);
+    }
+
+    @Test
+    public void scaleValidRangeByMaxDouble() {
+        Range testRange = Range.scale(exampleRange, Double.MAX_VALUE);
+        assertEquals("The upper bound of the range should be " + Double.toString(Double.MAX_VALUE), Double.MAX_VALUE, testRange.getUpperBound(), .000000001d);
+    }
+
+    @Test
+    public void scaleValidRangeByMinDouble() {
+        Range testRange = Range.scale(exampleRange, Double.MIN_VALUE);
+        assertEquals("The upper bound of the range should be " + Double.toString(Double.MIN_VALUE), Double.MIN_VALUE, testRange.getUpperBound(), .000000001d);
     }
     
     @After
