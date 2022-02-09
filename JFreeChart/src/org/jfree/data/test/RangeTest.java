@@ -11,6 +11,8 @@ public class RangeTest {
     private Range extraneousMinRange;
     private Range refRange;
     private Range testRange;
+    private Range smallestRange;
+    
     
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
@@ -23,6 +25,7 @@ public class RangeTest {
         extraneousMaxRange = new Range(1, Double.MAX_VALUE);
         extraneousMinRange = new Range(-Double.MIN_VALUE, 1);
     	refRange = new Range (-8.0, 16.0);
+    	smallestRange = new Range(0.0, Double.MIN_VALUE);
   
     }
 
@@ -227,6 +230,16 @@ public class RangeTest {
     	assertFalse("The range from 17.0 to 19.0 does not intersect the range from -8.0 to 16.0", refRange.intersects(17.0, 19.0));
     }
     
+    @Test public void interesectsMinDoubleValToMaxDoubleValDoubles() {
+    	assertTrue("The range from MIN_VALUE for double to MAX_VALUE for double intersects with the range from -8.0 to 16.0", refRange.intersects(Double.MIN_VALUE, Double.MAX_VALUE));
+    }
+    
+    @Test public void intersectSmallestPossibleRangeDoubles() {
+    	assertTrue("The range from 0.0 to MIN_VALUE for double intersects with the range from -8.0 to 16.0", refRange.intersects(0.0, Double.MIN_VALUE));
+    }
+    
+    
+    
     /////
     
     @Test 
@@ -287,6 +300,16 @@ public class RangeTest {
     	assertFalse("The range from 200.75 to 302.0 does not intersect the range from -8.0 to 16.0", refRange.intersects(testRange));
     }
     
+    @Test public void interesectsMinDoubleValToMaxDoubleValRangeArg() {
+    	testRange = new Range(Double.MIN_VALUE, Double.MAX_VALUE);
+    	assertTrue("The range from MIN_VALUE for double to MAX_VALUE for double intersects with the range from -8.0 to 16.0", refRange.intersects(testRange));
+    }
+    
+    @Test public void intersectSmallestPossibleRangeArgs() {
+    	assertTrue("The range from 0.0 to MIN_VALUE for double intersects with the range from -8.0 to 16.0", refRange.intersects(smallestRange));
+    }
+    
+    
     
     @Test
     public void containsBelowLowerBoundary() {
@@ -311,6 +334,16 @@ public class RangeTest {
     @Test 
     public void containsAboveUpperBoundary(){
     	    assertFalse("The value 99.0 is not contained within the range from -8.0 to 16.0", refRange.contains(99.0));
+    }
+    
+    @Test
+    public void containsMaxDoubleValue() {
+    	assertFalse("The maximum value of a double is not contained within the range from -8.0 to 16.0", refRange.contains(Double.MAX_VALUE));
+    }
+    
+    @Test
+    public void containsMinDoubleValue() {
+    	assertTrue("The minimum value of a double is contained within the range from -8.0 to 16.0", refRange.contains(Double.MIN_VALUE));
     }
   
     @After
