@@ -420,7 +420,7 @@ public class DataUtilitiesTest extends DataUtilities {
        }         
     }
 
-    //New Test
+    //Upper Boundary Valid Rows check. Viewing
     @Before
     public void setUp_ValidRowsExceeded() throws Exception { 
         context = new Mockery();
