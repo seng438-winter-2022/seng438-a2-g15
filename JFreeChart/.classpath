@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="D:/Development/Course Work/seng438/seng438-a2-g15/Assignment2-artifact/Assignment2-artifact/jfreechart-1.0.19/jfreechart-1.0.19/jfreechart-1.0.19/lib/Jmock/jmock-junit4-2.5.1.jar"/>
 	<classpathentry kind="lib" path="D:/Development/Course Work/seng438/seng438-a2-g15/Assignment2-artifact/Assignment2-artifact/jfreechart-1.0.19/jfreechart-1.0.19/jfreechart-1.0.19/lib/Jmock/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="D:/Development/Course Work/seng438/seng438-a2-g15/Assignment2-artifact/Assignment2-artifact/jfreechart-1.0.19/jfreechart-1.0.19/jfreechart-1.0.19/lib/Jmock/jmock-script-2.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/Development/Course Work/seng438/seng438-a2-g15/Assignment2-artifact/Assignment2-artifact/jfreechart-1.0.19/jfreechart-1.0.19/jfreechart-1.0.19/lib/hamcrest-all-1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
