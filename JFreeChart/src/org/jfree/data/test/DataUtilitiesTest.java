@@ -14,6 +14,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
+import org.jfree.data.DefaultKeyedValue;
+import org.jmock.*;
 
 public class DataUtilitiesTest extends DataUtilities {
 
@@ -297,7 +299,6 @@ public class DataUtilitiesTest extends DataUtilities {
     public void tearDown() throws Exception {
     }
 
-public class DataUtilitiesTest {
     private DataUtilities exampleDataUtilities;
     @BeforeClass public static void setUpBeforeClass() throws Exception {
     }
